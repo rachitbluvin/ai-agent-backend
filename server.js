@@ -22,10 +22,15 @@ app.use('/api/ai', aiRoutes);
 app.use(errorHandler);
 
 const start = async () => {
-  await connectDB();
-  app.listen(PORT, "0.0.0.0", () => {
+  app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
+  const connected = await connectDB();
+  if (connected) {
+    console.log('MongoDB connected');
+  } else {
+    console.log('MongoDB not configured or connection failed');
+  }
 };
 
 start();
